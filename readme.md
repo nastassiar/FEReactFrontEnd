@@ -1,3 +1,7 @@
+A large portion of this is taken from  https://github.com/waldekmastykarz/office-mygroups-react
+
+The following pertains to that:
+
 # My Office 365 Groups
 
 This application shows the list of your Office 365 Groups retrieved using the Microsoft Graph.
