@@ -46,7 +46,7 @@ componentWillUnmount() {
 handleAPIRequest()
 {
     Adal.apiRequest({
-      url: 'https://feapimanagementservice.azure-api.net/permissions/access',
+      url: 'https://feapimanagement.azure-api.net/permissions/access',
       method : 'GET',
       adalurl: 'https://graph.microsoft.com/v1.0/me',
       headers: {
