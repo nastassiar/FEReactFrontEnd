@@ -12,7 +12,6 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-
         <h1 className="ms-font-xxl">My Profile</h1>
         <Profile />
         <h1 className="ms-font-xxl">Request</h1>

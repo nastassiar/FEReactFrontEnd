@@ -196,7 +196,70 @@ var adalRequest = function (settings) {
   return deferred.promise;
 }
 
+var apiRequest = function (settings) {
+  var deferred = q.defer();
+
+  isAuthenticated().then(function () {
+    var resource = _adal.getResourceForEndpoint(settings.adalurl);
+
+    if (!resource) {
+      _adal.info('No resource configured for \'' + settings.adalurl + '\'');
+      deferred.reject();
+      return deferred.promise;
+    }
+    settings.adalurl = null;
+    var tokenStored = _adal.getCachedToken(resource);
+    if (tokenStored) {
+      if (!settings.headers) {
+        settings.headers = {};
+      }
+
+      settings.headers.Authorization = 'Bearer ' + tokenStored;
+
+      makeRequest(settings).then(deferred.resolve, deferred.reject);
+    }
+    else {
+      var isEndpoint = false;
+
+      for (var endpointUrl in _adal.config.endpoints) {
+        if (settings.adalurl.indexOf(endpointUrl) > -1) {
+          isEndpoint = true;
+        }
+      }
+
+      if (_adal.loginInProgress()) {
+        _adal.info('Login already in progress');
+        deferred.reject();
+      }
+      else if (isEndpoint) {
+        _adal.acquireToken(resource, function (error, tokenOut) {
+          if (error) {
+            deferred.reject();
+            _adal.error(error);
+          }
+          else {
+            if (tokenOut) {
+              _adal.verbose('Token is available');
+              if (!settings.headers) {
+                settings.headers = {};
+              }
+              settings.headers.Authorization = 'Bearer ' + tokenOut;
+              makeRequest(settings).then(deferred.resolve, deferred.reject);
+            }
+          }
+        });
+      }
+    }
+  }, function () {
+    _adal.login();
+  })
+
+  return deferred.promise;
+}
+
+
 module.exports = {
   adalRequest: adalRequest,
+  apiRequest: apiRequest,
   processAdalCallback: processAdalCallback
 }
