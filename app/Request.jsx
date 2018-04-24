@@ -8,39 +8,35 @@ var APIRequest =  class Request extends React.Component{
         super(props);
         //this.handleAPIRequest = this.handleAPIRequest().bind(this);
         this.state = {
-            showResponse : false,
+            showButton : true,
             response : false,
             error : false
         }
     }
     
     componentDidMount() {
-        //this.handleAPIRequest();
+        this.handleAPIRequest()
         /*
     var component = this;
     component.serverRequest = Adal.apiRequest({
-      url: 'https://feapimanagementservice.azure-api.net/permissions/access',
+      url: 'https://feapimanagement.azure-api.net/permissions/access',
       adalurl: 'https://graph.microsoft.com/v1.0/me',
       headers: {
         'Accept': 'application/json;odata.metadata=full'
       }
     }).then(function(data) {
-        res = false
-        if (data.Response == false || data.Response == 'false')
-        {
-            res = true
-        }
+        var res = true
         
         component.setState({
-        showResponse: true,
-        response : res,
-        r : data.Response
+            showButton: false,
+            response : res,
+            error : false
     })
 }.bind(component));*/
 }
 
 componentWillUnmount() {
-    //this.serverRequest.abort();
+   // this.serverRequest.abort();
 }
 
 handleAPIRequest()
@@ -53,14 +49,14 @@ handleAPIRequest()
         'Accept': 'application/json;odata.metadata=full'
       }
     }).then(function(data) {
-        res = false
-        if (data.Response == true || data.Response == 'true')
+        var res = false
+        if (data.Response == true || data.Response == 'true' || data.Response == "true")
         {
             res = true
         }
         
         this.setState({
-        showResponse: true,
+        showButton: true,
         response : res,
         error : false
     })
@@ -68,7 +64,7 @@ handleAPIRequest()
 .catch(function()
 {
     this.setState({
-        showResponse: false,
+        showButton: true,
         response : false,
         error : true
 }
@@ -77,22 +73,38 @@ handleAPIRequest()
 }
 
 render() {
-    const showResponse = this.state.showResponse;
+    const showButton = this.state.showButton
     const response = this.state.response;
+    const error = this.state.error;
     return (
         <div>
-        {showResponse ? 
-        (
+        {
+            showButton ? 
+                <button onClick={this.handleAPIRequest.bind(this)}>
+                    Do you have access to the app? 
+                </button> :
+                <div></div>
+        }
+        <br/>
+        {
             response ? 
-                <a>You have access to this application </a> :
-                <a>You do not have access to this application </a>
-        ) : 
-        (
-        <button onClick={this.handleAPIRequest.bind(this)}>
-            Do you have access? 
-        </button>
-        )}
-        {this.state.error && <div>Error Message</div>}
+            <div>
+            <div className="ms-Persona-primaryTextt"><a>Yes! You have access to this application :) </a></div>
+            </div>
+            :
+            <div>
+            <div className="ms-Persona-primaryText"><a>No! You do not have access to this application :( </a></div>
+            </div>
+        }
+        <br/>
+        {
+            this.state.error ?
+            <div>
+            <div className="ms-Persona-primaryText"><a>An Error has occurred! </a></div>
+            </div>
+            :
+            <div></div>
+        }
         </div>
     );
     }
