@@ -89,18 +89,18 @@ render() {
         {
             response ? 
             <div>
-            <div className="ms-Persona-primaryTextt"><a>Yes! You have access to this application :) </a></div>
+                <a>Yes! You have access to this application :) </a>
             </div>
             :
             <div>
-            <div className="ms-Persona-primaryText"><a>No! You do not have access to this application :( </a></div>
+            <a>No! You do not have access to this application :( </a>
             </div>
         }
         <br/>
         {
             this.state.error ?
             <div>
-            <div className="ms-Persona-primaryText"><a>An Error has occurred! </a></div>
+            <a>An Error has occurred! </a>
             </div>
             :
             <div></div>
