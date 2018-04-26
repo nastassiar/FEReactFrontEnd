@@ -1,25 +1,24 @@
-A large portion of this is taken from  https://github.com/waldekmastykarz/office-mygroups-react
+## Overview
 
-The following pertains to that:
+This application gets the user to sign in (will only work with users in the tenant of the current application). After successful sign in it shows the users display name, id, and a button to check if they have access to an application. 
 
-# My Office 365 Groups
+This web application has been built using [React](https://facebook.github.io/react/) and shows how you can leverage [ADAL JS](https://github.com/AzureAD/azure-activedirectory-library-for-js) to connect to the Microsoft Graph. 
 
-This application shows the list of your Office 365 Groups retrieved using the Microsoft Graph.
-
-![Screenshot](assets/screenshot.png)
-
-This web application has been built using [React](https://facebook.github.io/react/) and shows how you can leverage [ADAL JS](https://github.com/AzureAD/azure-activedirectory-library-for-js) to connect to the Microsoft Graph. UX is implemented using [Office UI Fabric](http://dev.office.com/fabric).
+This repo was used as reference:  https://github.com/waldekmastykarz/office-mygroups-react
 
 ## Prerequisites
 
-In order to use this application you need the following prerequisites:
-- Office 365 tenant
-- admin access to the Azure Active Directory connected to the Office 365 tenant
+In order to have sign in work you need:
+- AAD tenant
+- admin access to the Azure Active Directory connected to the tenant
+
+In order to have the button work you need:
+- A back end similar to https://github.com/nastassiar/DjangoRESTTutorial set up
 
 ## Configuration
 
 Following are the steps that you need to complete in order to see this application working:
-- in the old Azure Management Portal (https://manage.windowsazure.com):
+- in the Azure  Portal (https://portal.azure.com):
   - go to Azure Active Directory (AAD)
   - create a new AAD web application
   - set the return URL to `https://localhost:8443`
